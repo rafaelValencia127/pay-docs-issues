@@ -1,0 +1,874 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>API Upgrade</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2fcc2cba-80de-80bb-be6d-c4ce0305ed44" class="page sans"><header><h1 class="page-title" dir="auto">API Upgrade</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="ltr"><nav id="6b6eb9b3-37b3-47ce-a55c-009901738dae" class="table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2fdc2cba-80de-8010-8335-d5430febbfb3">Biblioteca</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2fdc2cba-80de-80a0-ab66-fc0c169e22b2">EndPoints</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2fcc2cba-80de-80a6-b219-c3be8f4ee9f2">Post /auth/login</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2fdc2cba-80de-80f9-bf7c-d8b64fc7924e">Https status: 400 Bad Request</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2fdc2cba-80de-808f-b860-ddd5def19c46">Https status: 401 Unauthorized</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2fcc2cba-80de-80d6-bb09-f1115b5bad45">Get /auth/api-access-token</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2fdc2cba-80de-8070-8293-eebadda6b333">Https status: 401 Unauthorized</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2fdc2cba-80de-8002-bbf8-f711cda1bfb0">Https status: 401 Unauthorized</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2ffc2cba-80de-8060-be40-cce781b225a4">Get /auth/generate-api-keys</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2ffc2cba-80de-808d-b250-ebf8a7e91eea">Https status: 406 Not Acceptable</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#304c2cba-80de-8068-863f-f918d3ef7ffe">Post /auth/delete-api-key</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#301c2cba-80de-80f3-a719-d393e0f68bce">Get /system-users/current-balance/{{currency}} y Get /system-users/current-balance</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#302c2cba-80de-80df-a7f0-d6cd7eb2710d">Https status: 401 Unauthorized</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#302c2cba-80de-802c-a0ed-dfa7b38524ee">Error de consistencia</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#31ac2cba-80de-80b9-be8c-e25dffe3b7bf">Get payments/supported-document-types/{country}</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#31ac2cba-80de-800f-a94d-f93ca15fae15">Get /payments/supported-bank-account-types/{{country}}</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#31ac2cba-80de-80de-9877-d2398f1ba3ba">Brazil , Chile y Peru</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#31ac2cba-80de-8058-94d7-e0ee564fce1c">Argentina, Colombia y Mexico</a></div></nav></div><div style="display:contents" dir="auto"><h2 id="2fdc2cba-80de-8010-8335-d5430febbfb3" class="">Biblioteca</h2></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8086-8c40-c7eabf5b5521" class="bulleted-list"><li style="list-style-type:disc">Chat de Gemini: <a href="https://gemini.google.com/share/6799db965c55">https://gemini.google.com/share/6799db965c55</a></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8039-98ce-fb29b325484b" class="bulleted-list"><li style="list-style-type:disc"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">MDN HTTP response status code</a></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-803e-89bc-c0b42a1deee5" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-introduction">RFC 9110: HTTP Semantics</a></li></ul></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2fdc2cba-80de-8073-9fb7-c3a89c662ed2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8027-b280-f608f0fcbe6c" class="">Nota: Se sugiere que en los returns se tenga en el header, Content-Type: application/json, esto es para que no pasen los errores devolver un html ya que es el por defecto, Content-Type: text/html</p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80e1-8791-d4e3306f9171" class="">
+</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8053-bb05-f6d2dc595796" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">Content-Type: application/json</code></pre></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8025-8e93-e428045c03ce" class=""><br/>En el nuevo estandar tambien se sugiere que si el return es un problema el Content-Type debe ser application/problem+json</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8069-b481-daf70d9da26c" class="code code-wrap"><code class="language-PowerShell" style="white-space:pre-wrap;word-break:break-all">Content-Type: application/problem+json</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2fdc2cba-80de-80ad-b5c0-e26795784496"><div style="font-size:1.5em"><span class="icon">🔥</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8036-ae66-e16e5cc318fe" class="">Actualmente segun el estandar RFC 9110 junto con el RFC 7807 , los returns deben de ser de la siguiente manera, sin embargo si hay campos que no se pueden aplicar, se pueden quitar, la idea es definir cuales seran obligatorios, por ejemplo de momento el value para type no existiría.</p></div><div style="display:contents" dir="ltr"><table id="2fdc2cba-80de-8083-95a6-f071aade5981" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="2fdc2cba-80de-8003-a44f-c7e8a35f289d"><td id="sNGG" class="" style="width:206.66666666666666px"><strong>Key</strong></td><td id="Za\l" class="" style="width:135.6666717529297px"><strong>Type</strong></td><td id="=wT]" class="" style="width:260.6666717529297px"><strong>Description</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="3b55b7f7-b04b-4f31-acc0-10655d3bf44b"><td id="sNGG" class="" style="width:206.66666666666666px"><code><strong>status</strong></code></td><td id="Za\l" class="" style="width:135.6666717529297px"><code>integer</code></td><td id="=wT]" class="" style="width:260.6666717529297px">El código de estado HTTP numérico (ej. 400, 401, 402) generado por el servidor de origen para esta ocurrencia del problema.</td></tr></div><div style="display:contents" dir="ltr"><tr id="56121731-3a61-4eb6-940a-079b421bd03a"><td id="sNGG" class="" style="width:206.66666666666666px"><code><strong>type</strong></code></td><td id="Za\l" class="" style="width:135.6666717529297px"><code>string (URI)</code></td><td id="=wT]" class="" style="width:260.6666717529297px">Un identificador URI que referencia la documentación específica del tipo de problema. Proporciona a los desarrolladores un enlace para entender la causa y la solución.</td></tr></div><div style="display:contents" dir="ltr"><tr id="60d48017-6c81-4859-aea7-be84ec3d2777"><td id="sNGG" class="" style="width:206.66666666666666px"><code><strong>title</strong></code></td><td id="Za\l" class="" style="width:135.6666717529297px"><code>string</code></td><td id="=wT]" class="" style="width:260.6666717529297px">Un resumen corto y legible por humanos del tipo de problema. No debe cambiar de una ocurrencia a otra del mismo error (ej. &quot;Bad Request&quot;).</td></tr></div><div style="display:contents" dir="ltr"><tr id="804e80f7-b362-4a15-9908-1f94c19d1275"><td id="sNGG" class="" style="width:206.66666666666666px"><code><strong>detail</strong></code></td><td id="Za\l" class="" style="width:135.6666717529297px"><code>string</code></td><td id="=wT]" class="" style="width:260.6666717529297px">Una explicación detallada y específica de esta ocurrencia del error. A diferencia del <code>title</code>, este campo ayuda a corregir el problema puntual (ej. &quot;The field &#x27;username&#x27; is missing&quot;).</td></tr></div><div style="display:contents" dir="ltr"><tr id="f8092a75-2171-4f66-a884-6f14656e674b"><td id="sNGG" class="" style="width:206.66666666666666px"><code><strong>code</strong></code></td><td id="Za\l" class="" style="width:135.6666717529297px"><code>string</code></td><td id="=wT]" class="" style="width:260.6666717529297px"><strong>(Custom Adamo Pay)</strong> Un código alfanumérico único para que el Frontend realice acciones programáticas sin depender de mensajes de texto (ej. <code>MALFORMED_JSON</code>).</td></tr></div><div style="display:contents" dir="ltr"><tr id="d5a190c3-f9b7-4646-b99f-f6f3631941c2"><td id="sNGG" class="" style="width:206.66666666666666px"><code><strong>instance</strong></code></td><td id="Za\l" class="" style="width:135.6666717529297px"><code>string (URI)</code></td><td id="=wT]" class="" style="width:260.6666717529297px">El endpoint o recurso específico donde ocurrió el error. Ayuda a rastrear el problema en los logs de la API (ej. <code>/v1/login</code>).</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80aa-9fdb-dfe9451140bb" class="">Ejemplo:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-807a-930b-c603ff7b2a4f" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;type&quot;: &quot;https://developer.adamopay.com/errors/malformed-json&quot;,
+  &quot;title&quot;: &quot;Bad Request&quot;,
+  &quot;status&quot;: 400,
+  &quot;detail&quot;: &quot;The request body could not be parsed due to invalid JSON syntax.&quot;,
+  &quot;code&quot;: &quot;MALFORMED_JSON&quot;,
+  &quot;instance&quot;: &quot;/v1/login&quot;
+}</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2fdc2cba-80de-80d0-bbc3-fb3ccd3c4f71"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8035-81c0-e2eb9645d418" class="">Nota: En los Header a la hora retornar peticiones se sugiere ser lo mas limpios posibles, en los endpoints se tienen algunos valores en los response Headers que ensucian y en otro caso puede ser visto como vulberabilidad al mostrar con que tecnología este el backend, sería limpiar los siguientes header:</p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8090-afaf-faad0e80160b" class="">
+</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8098-a8a4-d5ad26398c02" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+	Header: {
+		//x-amz-* hace referencia a cualquier header correspondiente a AWS Gateway
+		x-amz-*: any
+		x-powered-by: Express
+	}
+}</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><h1 id="2fdc2cba-80de-80a0-ab66-fc0c169e22b2" class="">EndPoints</h1></div><div style="display:contents" dir="auto"><h2 id="2fcc2cba-80de-80a6-b219-c3be8f4ee9f2" class="">Post /auth/login</h2></div><div style="display:contents" dir="auto"><h3 id="2fdc2cba-80de-80f9-bf7c-d8b64fc7924e" class="">Https status: 400 Bad Request</h3></div><div style="display:contents" dir="auto"><p id="2fcc2cba-80de-80ad-9e60-c18e4de26b4f" class="">Este error ocurre cuando al mandarle el username o password, este se mandá en un formato incorrecto, ejemplo:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8034-9fe9-cbece1d54fbb" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">//Para replicar el error solo se debe modificar el body
+{ 
+    &quot;username&quot;: usuario@dominio.co,
+    &quot;password&quot;: &quot;ContraseñaSegura123&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-802f-b07c-da40ab09e81c" class="">return actual:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-80a1-9894-c25de8dc4d88" class="code code-wrap"><code class="language-HTML" style="white-space:pre-wrap;word-break:break-all">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;title&gt;Error&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;pre&gt;SyntaxError: Unexpected token &amp;#39;m&amp;#39;, ...&amp;quot;sername&amp;quot;: mauricioca&amp;quot;... is not valid JSON
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at JSON.parse (&amp;lt;anonymous&amp;gt;)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at parse (/opt/nodejs/node_modules/body-parser/lib/types/json.js:92:19)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at /opt/nodejs/node_modules/body-parser/lib/read.js:128:18
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at invokeCallback (/opt/nodejs/node_modules/raw-body/index.js:238:16)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at done (/opt/nodejs/node_modules/raw-body/index.js:227:7)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at IncomingMessage.onEnd (/opt/nodejs/node_modules/raw-body/index.js:287:7)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at IncomingMessage.emit (node:events:524:28)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at endReadableNT (node:internal/streams/readable:1698:12)
+            &lt;br&gt; &amp;nbsp; &amp;nbsp;at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+        &lt;/pre&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-804a-87d6-fb1bd0fd0c20" class="">Aplicando el estandar:</p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-803e-9f3b-f2d77345a696" class=""><strong>Response Headers:</strong></p></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-804a-b900-c9116f4ed06c" class="bulleted-list"><li style="list-style-type:disc"><code>Status: 400 Bad request</code> </li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8032-b034-cc46043b276c" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type: application/problem+json</code></li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8037-814b-daa6469fbc9c" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;type&quot;: &quot;https://docs.pay.adamoservices.co/errors/malformed-json&quot;,
+  &quot;title&quot;: &quot;Bad Request&quot;,
+  &quot;status&quot;: 400,
+  &quot;detail&quot;: &quot;The request body could not be parsed due to invalid JSON syntax.&quot;,
+  &quot;code&quot;: &quot;MALFORMED_JSON&quot;,
+  &quot;instance&quot;: &quot;/v1/login&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><h3 id="2fdc2cba-80de-808f-b860-ddd5def19c46" class="">Https status: 401 Unauthorized</h3></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80f0-8960-e04925d908f7" class="">Este error ocurre cuando iniciamos con credenciales no validas</p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80fc-adbf-f439733eb367" class="">return actual:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-80b7-8aeb-fe1cc74783cb" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;Unauthorized&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8018-ac55-cc7e80edc0af" class="">Aplicando el estandar:</p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8079-8066-d8095566c0c0" class=""><strong>Response Headers:</strong></p></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-809c-ae56-fc7f612ebbab" class="bulleted-list"><li style="list-style-type:disc"><code>Status: 401 Unauthorized</code></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-800e-a869-dcca1562e4dc" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type: application/problem+json</code></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-806c-9e6e-d01e6b12463f" class="bulleted-list"><li style="list-style-type:disc"><code>WWW-Authenticate: Basic realm=&quot;Adamo&quot;</code> <div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2fdc2cba-80de-80ca-93c6-f197b91c80f4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80ad-b14f-d3c5da3e9e78" class="">El <code>realm</code> le indica al cliente (un navegador, una App móvil o un desarrollador) qué área de seguridad está intentando acceder<br/></p></div></div></figure></div></li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-800a-915e-e15aadb3f46e" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;type&quot;: &quot;https://docs.adamopay.com/errors/invalid-credentials&quot;,
+  &quot;title&quot;: &quot;Unauthorized&quot;,
+  &quot;status&quot;: 401,
+  &quot;detail&quot;: &quot;The credentials provided are invalid or have expired. Please check your username and password.&quot;,
+  &quot;code&quot;: &quot;INVALID_CREDENTIALS&quot;,
+  &quot;instance&quot;: &quot;/auth/api-access-token&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><h2 id="2fcc2cba-80de-80d6-bb09-f1115b5bad45" class="">Get /auth/api-access-token</h2></div><div style="display:contents" dir="auto"><h3 id="2fdc2cba-80de-8070-8293-eebadda6b333" class="">Https status: 401 Unauthorized</h3></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80f4-b2d3-c766170ec551" class="">Para replicar el error se debe de mandar la petición con un token que respete la sintaxis del token pero que ya haya expirado. </p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8080-a4f3-fdb7e26f961a" class="">return actual:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8002-bcd9-de04a64a05cb" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;Not Authorized: Expired. TokenExpiredError: jwt expired&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-8050-9f27-ea0afc40d86b" class="">Aplicando el estandar:</p></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80ed-8317-cddad733ea36" class=""><strong>Response Headers:</strong></p></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8006-9c82-c9ce615c1121" class="bulleted-list"><li style="list-style-type:disc"><code>Status: 401 Unauthorized</code></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8056-9969-d5691ebe08df" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type: application/problem+json</code></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8019-80d2-e734c8fbfd83" class="bulleted-list"><li style="list-style-type:disc"><code>WWW-Authenticate: Bearer realm=&quot;Adamo&quot;, error=&quot;invalid_token&quot;, error_description=&quot;The access token expired&quot;</code></li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-8015-ada0-e794dc4fed8b" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;type&quot;: &quot;https://docs.adamopay.com/errors/token-expired&quot;,
+  &quot;title&quot;: &quot;Unauthorized&quot;,
+  &quot;status&quot;: 401,
+  &quot;detail&quot;: &quot;Your session has expired. Please log in again to obtain a new access token.&quot;,
+  &quot;code&quot;: &quot;TOKEN_EXPIRED&quot;,
+  &quot;instance&quot;: &quot;/auth/access-token&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><h3 id="2fdc2cba-80de-8002-bbf8-f711cda1bfb0" class="">Https status: 401 Unauthorized</h3></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80d0-9462-dca02508c8f0" class="">Para replicar este error se debe de eliminar del header el token de autorización</p></div><div style="display:contents" dir="auto"><p id="2fcc2cba-80de-8013-b909-f554966e7d58" class="">return actual:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-800d-8991-e3ff51cdae98" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;Not Authorized: Expired. Error: No auth token&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><div id="2fcc2cba-80de-80d8-9304-c7ed6edda5df" class="column-list"><div style="display:contents" dir="auto"><div id="2fcc2cba-80de-80c3-980a-d28287664e4f" style="width:50%" class="column"><div style="display:contents" dir="auto"><p id="2fcc2cba-80de-800f-9902-eb6d36470fd3" class="">Aplicando el estandar:</p></div></div></div><div style="display:contents" dir="auto"><div id="2fcc2cba-80de-8029-9ba7-fcf9595b809f" style="width:50%" class="column"><div style="display:contents" dir="auto"><p id="2fcc2cba-80de-80d3-8929-d2d567195f62" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><p id="2fdc2cba-80de-80db-90a7-d74cbc2b9fdb" class=""><strong>Response Headers:</strong></p></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-808c-9cb3-dc23acbc1bdb" class="bulleted-list"><li style="list-style-type:disc"><code>Status: 401 Unauthorized</code></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-8014-ab58-cf4d1b26175b" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type: application/problem+json</code></li></ul></div><div style="display:contents" dir="auto"><ul id="2fdc2cba-80de-80a1-8715-e98362cde383" class="bulleted-list"><li style="list-style-type:disc"><code>WWW-Authenticate: Bearer realm=&quot;Adamo&quot;</code></li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fdc2cba-80de-80f6-8524-eae1d4959913" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;type&quot;: &quot;https://docs.adamopay.com/errors/missing-token&quot;,
+  &quot;title&quot;: &quot;Unauthorized&quot;,
+  &quot;status&quot;: 401,
+  &quot;detail&quot;: &quot;Authentication credentials were not provided. Please include the Bearer token in the Authorization header.&quot;,
+  &quot;code&quot;: &quot;MISSING_AUTH_TOKEN&quot;,
+  &quot;instance&quot;: &quot;/auth/api-access-token&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><h2 id="2ffc2cba-80de-8060-be40-cce781b225a4" class="">Get /auth/generate-api-keys</h2></div><div style="display:contents" dir="auto"><h3 id="2ffc2cba-80de-808d-b250-ebf8a7e91eea" class="">Https status: 406 Not Acceptable</h3></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-80dc-bb6f-e7b68b0886cb" class="">Para replicar este error se debe de superar la cantidad de api key permitida por usuario, para nuestra caso serían 5.</p></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-806a-b085-e02809a492d4" class="">return actual:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="301c2cba-80de-808a-9838-d71c9205ef4a" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;Key creation limit reached (5). Please delete at least one from your profile to create a new one.&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-803d-bc4a-eace771b7ac2" class="">Aplicando estandares:</p></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-80d6-92f9-c3a720c8fd9c" class="">Para este tipo de return, se considera que el mejor status https sería 409 conflict, este error nos indica que la peticíon no se pudo completar porque hay un confilto con el estado actual del recurso.</p></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-80b6-a440-c96fceb785c3" class="">
+</p></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-8096-a2a0-cf335436cd7e" class="">En este caso , se estaría violando una regla del negocio si se permite crear una llave más apartir de ya tener 5 keys, no sé recomienda en este caso el 406 ya que en general el estandar para este código es, cuando el cliente, mandá un body o hace una petición en un formato no valido para el servidor o viceversa (Esto lo sabemos por lo que colocamos en el header con el key, Accept)</p></div><div style="display:contents" dir="auto"><p id="301c2cba-80de-8026-9b11-c09d1ee884b0" class=""><strong>Response Headers:</strong></p></div><div style="display:contents" dir="auto"><ul id="301c2cba-80de-8056-ae47-c15b6a9f4ea1" class="bulleted-list"><li style="list-style-type:disc"><code>Status: 409 conflict</code></li></ul></div><div style="display:contents" dir="auto"><ul id="301c2cba-80de-8054-9fb4-c96554afb0c8" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type: application/problem+json</code></li></ul></div><div style="display:contents" dir="auto"><ul id="301c2cba-80de-8095-a8d0-e86e63e59fc1" class="bulleted-list"><li style="list-style-type:disc"><code>Accept: application/json</code></li></ul></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="301c2cba-80de-8026-806f-e643d12c1d5c" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;type&quot;: &quot;https://docs.adamopay.com/errors/key-limit-reached&quot;,
+  &quot;title&quot;: &quot;Conflict&quot;,
+  &quot;status&quot;: 409,
+  &quot;detail&quot;: &quot;Key creation limit reached (5). Please delete at least one existing key from your profile before attempting to create a new one.&quot;,
+  &quot;code&quot;: &quot;API_KEY_LIMIT_EXCEEDED&quot;,
+  &quot;instance&quot;: &quot;/auth/generate-api-keys&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><h2 id="304c2cba-80de-8068-863f-f918d3ef7ffe" class="">Post /auth/delete-api-key</h2></div><div style="display:contents" dir="auto"><h2 id="301c2cba-80de-80f3-a719-d393e0f68bce" class="">Get /system-users/current-balance/{{currency}} y Get /system-users/current-balance</h2></div><div style="display:contents" dir="auto"><h3 id="302c2cba-80de-80df-a7f0-d6cd7eb2710d" class="">Https status: 401 Unauthorized</h3></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-800f-972b-dceead92da82" class="">return actual:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="302c2cba-80de-802c-bb1e-d9386633da04" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;name&quot;: &quot;TokenExpiredError&quot;,
+    &quot;message&quot;: &quot;jwt expired&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-8016-b5ae-da53f3501e01" class="">Se esta presentando que se tiene varios estrucutras y mensajes para el mismo error, el caso del Unauthorized, por ejemplo para otros endpoint se tiene</p></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-8080-8a54-cf4301a0fd71" class="">Para el enpoint /auth/generate-api-keys</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="302c2cba-80de-80a1-b842-d92c8f49366e" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;Not Authorized: Expired. TokenExpiredError: jwt expired&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-80c5-9d38-eac6423ffee9" class="">Lo ideal es tener el mismo JSON para los errores de la misma naturaleza</p></div><div style="display:contents" dir="auto"><h3 id="302c2cba-80de-802c-a0ed-dfa7b38524ee" class="">Error de consistencia</h3></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-8092-a045-ebbc112c22bf" class="">Ambas devuelven el mismo objeto, sin embargo hay un valor que no es consistente, currency dentro del objeto balanceDistributionInWallets, tenemos que su valor es en mayuscula o minuscula dependiendo del endpoint</p></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-8003-a31f-e396a5ab71d6" class="">/system-users/current-balance</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="302c2cba-80de-8074-b1de-ee4e15677c5b" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;currency&quot;: &quot;cop&quot;,
+    &quot;balanceDistributionInWallets&quot;: [
+        {
+            &quot;identifier&quot;: &quot;8ebc28879059&quot;,
+            ...
+            &quot;currency&quot;: &quot;COP&quot; //Valor en mayuscula
+        }
+    ],
+    &quot;totalBalance&quot;: 73596000,
+    &quot;balanceDescription&quot;: {
+        ...
+    }
+}</code></pre></div><div style="display:contents" dir="auto"><p id="302c2cba-80de-80e0-9b9c-c39ca16a53a6" class="">/system-users/current-balance/{{currency}}</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="302c2cba-80de-80ab-adbb-c30a6a088f03" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;currency&quot;: &quot;cop&quot;,
+    &quot;totalBalance&quot;: 73596000,
+    &quot;balanceDescription&quot;: {
+        ...
+    },
+    &quot;balanceDistributionInWallets&quot;: [
+        {
+            &quot;identifier&quot;: &quot;8ebc28879059&quot;,
+            ...
+            &quot;currency&quot;: &quot;cop&quot; //Valor en minuscula
+        }
+    ]
+}</code></pre></div><div style="display:contents" dir="auto"><h2 id="31ac2cba-80de-80b9-be8c-e25dffe3b7bf" class="">Get payments/supported-document-types/{country}</h2></div><div style="display:contents" dir="auto"><p id="31ac2cba-80de-80a1-ab0a-c57b3db4e505" class="">El return de Chile devuelve en el body supportedBanks, cuando debería de ser documentos de personas naturales</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="31ac2cba-80de-809c-87df-cfd85a2f153d" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;country&quot;: &quot;chi&quot;,
+  &quot;supportedBanks&quot;: [
+    {
+      &quot;type&quot;: &quot;RUT&quot;,
+      &quot;name&quot;: &quot;RUT&quot;
+    }
+  ]
+}</code></pre></div><div style="display:contents" dir="auto"><p id="31ac2cba-80de-8078-9caf-eaf8662f7137" class="">Correcto</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="31ac2cba-80de-8096-9641-d17e8b004ee9" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;country&quot;: &quot;bra&quot;,
+  &quot;supportedDocumentTypes&quot;: [
+    {
+      &quot;type&quot;: &quot;PA&quot;,
+      &quot;name&quot;: &quot;Pasaporte&quot;
+    },
+    {
+      &quot;type&quot;: &quot;CPF&quot;,
+      &quot;name&quot;: &quot;Cadastro de Pessoas Físicas&quot;
+    },
+    {
+      &quot;type&quot;: &quot;CNPJ&quot;,
+      &quot;name&quot;: &quot;Cadastro Nacional da Pessoa Jurídica&quot;
+    }
+  ]
+}</code></pre></div><div style="display:contents" dir="auto"><h2 id="31ac2cba-80de-800f-a94d-f93ca15fae15" class="">Get /payments/supported-bank-account-types/{{country}}</h2></div><div style="display:contents" dir="auto"><p id="31ac2cba-80de-807d-a4ff-e71e38a2f6ff" class="">El return tanto de chile , Peru y Brasil tenemos que en el objeto tiene un nombre de una llave así <strong>supportedBanks</strong>,  pero Colombia, Mexico y Argentina tienen otro nombre la llave <strong>supportedBankAccountTypes</strong> , haciendo que el endpoint tenga inconsistencias</p></div><div style="display:contents" dir="auto"><h3 id="31ac2cba-80de-80de-9877-d2398f1ba3ba" class="">Brazil , Chile y Peru</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="31ac2cba-80de-8076-940f-db6eb8aabe2f" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;country&quot;: &quot;bra&quot;,
+    &quot;supportedBanks&quot;: [
+        {
+            &quot;type&quot;: &quot;checking&quot;,
+            &quot;name&quot;: &quot;Checking account&quot;
+        },
+        {
+            ...
+        }
+    ]
+}</code></pre></div><div style="display:contents" dir="auto"><h3 id="31ac2cba-80de-8058-94d7-e0ee564fce1c" class="">Argentina, Colombia y Mexico</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="31ac2cba-80de-809e-91a6-e64443636173" class="code code-wrap"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;country&quot;: &quot;col&quot;,
+    &quot;supportedBankAccountTypes&quot;: [
+        {
+            &quot;type&quot;: &quot;27&quot;,
+            &quot;name&quot;: &quot;Checking account&quot;
+        },
+        {
+            ...
+        }
+    ]
+}</code></pre></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
